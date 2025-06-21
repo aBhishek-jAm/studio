@@ -14,7 +14,7 @@
 </a>
 
 
-
+AS OF NOW ONLY THE CLASSIFICATION PART AND REPORT PART IS MADE, FURTHER WE WOULD LIKE INVOLVE A GOVT DASHBOARD WHEREIN THEY CAN SEE THE LOCATION OF THE GARBAGE LITTERED AND COLLECT IT AND PROCESS IT. WE WOULD ALSO LIKE TO INVOLVE PRIVATE PLAYERS WHERE IN THEY COLLECT THE RECYCLABLE WASTE AND PROCESS IT (DOOR TO DOOR SERVICE). FOR THAT WE WOULD CREATE SEPERATE LOGINS FOR USERS AND GOVERNMENTS.
 
 # WasteWise
 
@@ -70,6 +70,12 @@ To get a local copy up and running, follow these simple steps.
 ---
 
 ![image](https://github.com/user-attachments/assets/d9f258a5-6bbb-450c-aaa8-386441e16e43)
+
+![image](https://github.com/user-attachments/assets/246cca47-e4da-4292-9f5f-bc94e1c14c46)
+
+![image](https://github.com/user-attachments/assets/d3925975-2230-49b2-bf46-5fa9ca9fabfe)
+
+
 
 
 
