@@ -69,4 +69,8 @@ To get a local copy up and running, follow these simple steps.
 
 ---
 
+![image](https://github.com/user-attachments/assets/d9f258a5-6bbb-450c-aaa8-386441e16e43)
+
+
+
 Built with ❤️ for a better planet.
