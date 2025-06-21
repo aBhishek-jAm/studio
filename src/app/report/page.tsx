@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -9,11 +9,6 @@ import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, UploadCloud, MapPin, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Report } from '@/components/map';
-
-const Map = dynamic(() => import('@/components/map'), { 
-  loading: () => <div className="flex items-center justify-center h-full"><Loader2 className="h-8 w-8 animate-spin" /> <p className="ml-2">Loading Map...</p></div>,
-  ssr: false 
-});
 
 export default function ReportPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -25,6 +20,11 @@ export default function ReportPage() {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
+  const Map = useMemo(() => dynamic(() => import('@/components/map'), { 
+    loading: () => <div className="flex items-center justify-center h-full"><Loader2 className="h-8 w-8 animate-spin" /> <p className="ml-2">Loading Map...</p></div>,
+    ssr: false 
+  }), []);
 
   useEffect(() => {
     if (file) {
