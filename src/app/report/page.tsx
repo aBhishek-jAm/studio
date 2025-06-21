@@ -1,31 +1,21 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, MapPin, Loader2 } from 'lucide-react';
-import type { Report } from '@/components/map';
+import { ArrowLeft, MapPin } from 'lucide-react';
 import ReportForm from '@/components/report-form';
+import { useToast } from '@/hooks/use-toast';
 
 export default function ReportPage() {
-  const [reports, setReports] = useState<Report[]>([]);
-  // Use the last report's location as the map center, or a default
-  const lastLocation = reports.length > 0 ? reports[reports.length - 1].location : null;
+  const { toast } = useToast();
 
-  const Map = useMemo(() => dynamic(() => import('@/components/map'), { 
-    loading: () => <div className="flex items-center justify-center h-full"><Loader2 className="h-8 w-8 animate-spin" /> <p className="ml-2">Loading Map...</p></div>,
-    ssr: false 
-  }), []);
-
-  const handleReportSubmit = (newReportData: Omit<Report, 'id' | 'timestamp'>) => {
-    const newReport: Report = {
-      ...newReportData,
-      id: Date.now(),
-      timestamp: new Date().toLocaleString(),
-    };
-    setReports(prev => [...prev, newReport]);
+  const handleReportSubmit = () => {
+    // In a real app, you would send the report to a server.
+    // For this prototype, we'll just show a success message.
+    toast({
+      title: 'Report Submitted!',
+      description: 'Thank you for helping keep our community clean.',
+    });
   };
 
   return (
@@ -47,20 +37,9 @@ export default function ReportPage() {
         </div>
       </header>
 
-      <main className="flex-grow container mx-auto p-4 md:p-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
+      <main className="flex-grow container mx-auto p-4 md:p-8 flex items-center justify-center">
+        <div className="w-full max-w-2xl">
           <ReportForm onReportSubmit={handleReportSubmit} />
-
-          <Card className="h-[400px] lg:h-auto">
-            <CardHeader>
-              <CardTitle>Reported Waste Map</CardTitle>
-              <CardDescription>Locations of recently reported waste.</CardDescription>
-            </CardHeader>
-            <CardContent className="h-[calc(100%-7rem)]">
-              <Map reports={reports} center={lastLocation ? [lastLocation.lat, lastLocation.lng] : [51.505, -0.09]} />
-            </CardContent>
-          </Card>
         </div>
       </main>
 

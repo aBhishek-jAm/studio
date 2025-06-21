@@ -6,10 +6,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useToast } from '@/hooks/use-toast';
 import { UploadCloud, MapPin, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { Report } from '@/components/map';
 
 interface ReportFormProps {
-  onReportSubmit: (report: Omit<Report, 'id' | 'timestamp'>) => void;
+  onReportSubmit: () => void;
 }
 
 export default function ReportForm({ onReportSubmit }: ReportFormProps) {
@@ -81,12 +80,8 @@ export default function ReportForm({ onReportSubmit }: ReportFormProps) {
     setIsSubmitting(true);
     // Simulate submission
     setTimeout(() => {
-      onReportSubmit({
-        imagePreview: previewUrl,
-        location: location,
-      });
+      onReportSubmit();
       setIsSubmitting(false);
-      toast({ title: 'Success', description: 'Report submitted successfully!' });
       resetForm();
     }, 1000);
   };
