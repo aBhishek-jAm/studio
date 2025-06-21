@@ -2,6 +2,7 @@
 
 import { summarizeWasteFacts } from '@/ai/flows/summarize-waste-facts';
 import { suggestAlternativeHandling } from '@/ai/flows/suggest-alternative-handling';
+import { classifyWaste } from '@/ai/flows/classify-waste-flow';
 
 const categories = ['Biodegradable', 'Recyclable', 'Other'] as const;
 type Category = (typeof categories)[number];
@@ -10,22 +11,6 @@ export type ClassificationResult = {
   category: Category;
   summary: string;
 };
-
-// This is a mocked classification function.
-// In a real app, this would involve a multi-modal AI call to classify the image.
-async function performWasteClassification(
-  image: File
-): Promise<Category> {
-  // We log the image details to show it's received, but the logic is mocked.
-  console.log(`Classifying image: ${image.name}, size: ${image.size} bytes`);
-
-  // Simulate network delay for a more realistic user experience.
-  await new Promise(resolve => setTimeout(resolve, 1500));
-
-  // Mock implementation: returns a random category.
-  const randomIndex = Math.floor(Math.random() * categories.length);
-  return categories[randomIndex];
-}
 
 export async function classifyWasteAction(
   formData: FormData
@@ -45,7 +30,14 @@ export async function classifyWasteAction(
       };
     }
 
-    const category = await performWasteClassification(file);
+    // Convert file to data URI
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const photoDataUri = `data:${file.type};base64,${buffer.toString('base64')}`;
+
+    // Use AI to classify the image
+    const { category } = await classifyWaste({ photoDataUri });
+
     const summaryResult = await summarizeWasteFacts({ category });
 
     return {
